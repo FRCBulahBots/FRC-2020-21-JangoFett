@@ -8,9 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Pickup;
 import frc.robot.commands.JoystickToDrive;
-import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.ArmCommands.JoystickToSuck;
+import frc.robot.commands.ArmCommands.JoystickToArm;
+
 
 
 public class RobotContainer {
@@ -18,20 +23,30 @@ public class RobotContainer {
   private final Joystick joystick = new Joystick (Constants.joystick);
 
   private final Drivetrain drive = new Drivetrain(Constants.leftMasterChief, Constants.leftFollower, Constants.rightMasterChief, Constants.rightFollower);
+  private final Pickup picker = new Pickup(Constants.armMover, Constants.pickupDeviceID, Constants.armA, Constants.armB);
 
   public RobotContainer() {
+    // Configure the button bindings
     configureButtonBindings();  
-    
+      
+    drive.setDefaultCommand(
+      new JoystickToDrive(drive, joystick, 1, 4)
+      );
 
   }
 
 
   private void configureButtonBindings() {
 
-        drive.setDefaultCommand(
-      new JoystickToDrive(drive, joystick, 1, 4)
-      );
+    new JoystickButton(joystick, 2)
+      .whenPressed(new JoystickToArm(picker));
 
+    new JoystickButton(joystick, 3)
+      .whenPressed(new JoystickToSuck(picker, 0));
+
+    new JoystickButton(joystick, 3)
+      .whenPressed(new JoystickToSuck(picker, 1));
+    
   }
 
    /*
