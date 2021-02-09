@@ -38,13 +38,13 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
 
-    new JoystickButton(joystick, 2)
+    new JoystickButton(joystick, 7)
       .whenPressed(new JoystickToArm(picker));
 
-    new JoystickButton(joystick, 3)
+    new JoystickButton(joystick, 0)
       .whenPressed(new JoystickToSuck(picker, 0));
 
-    new JoystickButton(joystick, 3)
+    new JoystickButton(joystick, 1)
       .whenPressed(new JoystickToSuck(picker, 1));
     
   }

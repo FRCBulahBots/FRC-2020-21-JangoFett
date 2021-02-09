@@ -25,6 +25,13 @@ public final class Constants {
     public static int leftFollower = 1;
     public static int rightMasterChief = 2;
     public static int rightFollower = 3;
+    public static int armMover = 4;
+
+    public static int pickupDeviceID = 8;
+
+    public static int armA = 0;
+    public static int armB = 1;
+    
 
     public static int joystick = 0;
 
