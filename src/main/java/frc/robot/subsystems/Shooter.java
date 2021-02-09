@@ -9,8 +9,21 @@ public class Shooter extends SubsystemBase {
   private CANSparkMax shoot;
   private Servo bigBoys;
 
-  public Shooter(int shooterMotor, int bigBoysPort) {
-    shooterMotor = new CANSparkMax(shooterMotor, MotorType.kBrushless);
+  public Shooter(int shooterDeviceID, int bigBoysPort) {
+    shoot = new CANSparkMax(shooterDeviceID, MotorType.kBrushless);
+    bigBoys = new Servo(bigBoysPort);
+    
+    bigBoys.setBounds(1.1, 1.5, 1.5, 1.5, 1.7);
+  }
+
+  public void setShootSpeed(double speedToSet){
+    shoot.set(speedToSet);
+  }
+  public void setServoSpeed(double servoSpeedToSet){
+    bigBoys.set(servoSpeedToSet);
+  }
+  public void yayayCoding(){
+
 
   }
 
