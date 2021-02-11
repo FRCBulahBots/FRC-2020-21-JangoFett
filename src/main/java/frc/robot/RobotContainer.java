@@ -10,10 +10,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Pickup;
+import jdk.vm.ci.meta.Constant;
 import frc.robot.commands.JoystickToDrive;
 import frc.robot.commands.ArmCommands.JoystickToSuck;
+import frc.robot.commands.ClimberCommands.JoystickToPull;
+import frc.robot.commands.ClimberCommands.JoystickToRaise;
 import frc.robot.commands.ArmCommands.JoystickToArm;
 
 
@@ -24,6 +28,8 @@ public class RobotContainer {
 
   private final Drivetrain drive = new Drivetrain(Constants.leftMasterChief, Constants.leftFollower, Constants.rightMasterChief, Constants.rightFollower);
   private final Pickup picker = new Pickup(Constants.armMover, Constants.pickupDeviceID, Constants.armA, Constants.armB);
+  private final Climb climber = new Climb(Constants.poleMotor, Constants.climbmotor1);
+
 
   public RobotContainer() {
     // Configure the button bindings
@@ -46,6 +52,13 @@ public class RobotContainer {
 
     new JoystickButton(joystick, 1)
       .whenPressed(new JoystickToSuck(picker, 1));
+
+    
+    new JoystickButton(joystick, 2)
+      .whenPressed(new JoystickToRaise(climber, 0));
+      
+         
+  
     
   }
 

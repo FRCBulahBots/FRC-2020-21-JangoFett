@@ -21,6 +21,11 @@ import edu.wpi.first.wpilibj.Encoder;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    //PWM
+    public static int bigBoysPort = 0;
+    public static int poleMotor = 1;
+
+    //CAN
     public static int leftMasterChief = 0;
     public static int leftFollower = 1;
     public static int rightMasterChief = 2;
@@ -28,13 +33,17 @@ public final class Constants {
     public static int armMover = 4;
 
     public static int pickupDeviceID = 8;
+    public static int climbmotor1 = 9;
+    public static int climbmotor2 = 10;
+    
 
+    //DIO
     public static int armA = 0;
     public static int armB = 1;
     
-
+    //USB
     public static int joystick = 0;
-
+    //ArmManipulator class from Last Year
     public static class ArmManipulator {   
         public WPI_TalonSRX armMotor;
         public Encoder armEncoder;
