@@ -43,28 +43,21 @@ public final class Constants {
     
     //USB
     public static int joystick = 0;
-    //ArmManipulator class from Last Year
-    public static class ArmManipulator {   
-        public WPI_TalonSRX armMotor;
-        public Encoder armEncoder;
-        public double kP = 0.002f; // Proportional controller constant
-        public int TargetPosition = 0; // Target Positional value of Arm (Defual target is 0;)
 
-        public ArmManipulator(int armManipulatorMotor, int encA, int encB){
-            armMotor = new WPI_TalonSRX(armManipulatorMotor);
-            armEncoder = new Encoder(encA, encB, true, Encoder.EncodingType.k4X);
-            armEncoder.setDistancePerPulse(7);
-        }
 
-        
-        public enum ArmPositions { // Enum containing all of the possible Arm Postions we may want to move to
-            FULLYRETRACTED(0),
-            BALLPICKUP(1404);
+    public static final double kShooterFreeRPS = 5300;
+
+    public static final double kSVolts = 0.05;
+    public static final double kVVoltSecondsPerRotation = 12.0 / kShooterFreeRPS;
+
+    public static final double kCosVolts = 1;
+    public static final double kVVoltSecondPerRad = 0.1;
+    public static final double kAVoltSecondSquaredPerRad = 0.1;
+
     
-            private final int id;
-            ArmPositions(int id) { this.id = id; }
-            public int getValue() { return id; }
-        }
-        
-    }
+    public static final double kMaxVelocityRadPerSecond = 3;
+    public static final double kMaxAccelerationRadPerSecSquared = 10;
+
+
+
 }

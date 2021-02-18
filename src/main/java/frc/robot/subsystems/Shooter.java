@@ -23,8 +23,7 @@ public class Shooter extends SubsystemBase {
     bigBoys.set(servoSpeedToSet);
   }
   public void yayayCoding(){
-
-
+    
   }
 
 }

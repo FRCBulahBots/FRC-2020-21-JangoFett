@@ -8,12 +8,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Pickup;
-import frc.robot.commands.JoystickToDrive;
 import frc.robot.commands.ArmCommands.JoystickToSuck;
 import frc.robot.commands.ClimberCommands.JoystickToPull;
 import frc.robot.commands.ClimberCommands.JoystickToRaise;
@@ -34,25 +34,24 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();  
       
-    drive.setDefaultCommand(
-      new JoystickToDrive(drive, joystick, 1, 4)
-      );
-
+    //simple lambda expression to make robot drive using left and right joystick.
+    drive.setDefaultCommand(new RunCommand(() -> drive.arcadeDrive(-joystick.getRawAxis(1), joystick.getRawAxis(4)), drive));
   }
 
 
   private void configureButtonBindings() {
 
+    //toggles arms from upright to pickup position.
     new JoystickButton(joystick, 7)
       .whenPressed(new JoystickToArm(picker));
 
+    //pulls/pushes ball into magazine or out of arm
     new JoystickButton(joystick, 0)
       .whenPressed(new JoystickToSuck(picker, 0));
-
     new JoystickButton(joystick, 1)
       .whenPressed(new JoystickToSuck(picker, 1));
 
-    
+
     new JoystickButton(joystick, 2)
       .whenPressed(new JoystickToRaise(climber, 0));
       
