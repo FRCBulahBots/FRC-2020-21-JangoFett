@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
@@ -12,6 +14,7 @@ public class Drivetrain extends SubsystemBase {
   private WPI_TalonSRX leftFollower;
   private WPI_TalonSRX rightMaster;
   private WPI_TalonSRX rightFollower;
+  private AHRS navxAhrs;
 
   private DifferentialDrive drive;
 
@@ -21,6 +24,8 @@ public class Drivetrain extends SubsystemBase {
     leftFollower = new WPI_TalonSRX(leftFollowerint);
     rightMaster = new WPI_TalonSRX(rightMasterint);
     rightFollower = new WPI_TalonSRX(rightFollowerint);
+
+    navxAhrs = new AHRS();
 
     //make our differential only control our masters, but...
     drive = new DifferentialDrive(leftMaster, rightMaster);
@@ -38,5 +43,14 @@ public class Drivetrain extends SubsystemBase {
   //nested method in method to drive.
   public void arcadeDrive(double forward, double turn){
     drive.arcadeDrive(forward, turn);
+
+    //Navx Stuff, temporary.
+    SmartDashboard.putBoolean("IMU_Connected", navxAhrs.isConnected());
+    SmartDashboard.putBoolean("IMU_IsCalibrating", navxAhrs.isCalibrating());
+    SmartDashboard.putNumber("Gyro Angle", navxAhrs.getAngle());
+    SmartDashboard.putBoolean("IMU_IsMoving", navxAhrs.isMoving());
+    SmartDashboard.putBoolean("IMU_IsRotating", navxAhrs.isRotating());
   }
+
+
 }
