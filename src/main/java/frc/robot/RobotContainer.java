@@ -9,7 +9,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
@@ -45,11 +44,11 @@ public class RobotContainer {
     new JoystickButton(joystick, 7)
       .whenPressed(new JoystickToArm(picker));
 
-    //pulls/pushes ball into magazine or out of arm
+    //pulls/pushes ball into magazine or out of arm, WHEN HELD.
     new JoystickButton(joystick, 0)
-      .whenPressed(new JoystickToSuck(picker, 0));
+      .whenHeld(new JoystickToSuck(picker, 0));
     new JoystickButton(joystick, 1)
-      .whenPressed(new JoystickToSuck(picker, 1));
+      .whenHeld(new JoystickToSuck(picker, 1));
 
 
     new JoystickButton(joystick, 2)
