@@ -41,8 +41,8 @@ public final class Constants {
     //USB
     public static int joystick = 0;
 
-
-    public static final double kShooterFreeRPS = 5300;
+    //Pickup/Magazine Constants
+    public static final double kShooterFreeRPS = 5676;
 
     public static final double kSVolts = 0.05;
     public static final double kVVoltSecondsPerRotation = 12.0 / kShooterFreeRPS;
@@ -51,7 +51,6 @@ public final class Constants {
     public static final double kVVoltSecondPerRad = 0.1;
     public static final double kAVoltSecondSquaredPerRad = 0.1;
 
-    
     public static final double kMaxVelocityRadPerSecond = 3;
     public static final double kMaxAccelerationRadPerSecSquared = 10;
 

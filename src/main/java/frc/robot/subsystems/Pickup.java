@@ -42,7 +42,6 @@ public class Pickup extends ProfiledPIDSubsystem{
     armEncoder = new Encoder(armA, armB, true, Encoder.EncodingType.k4X);
     suckMotor = new CANSparkMax(suck, MotorType.kBrushless);
     armMotor = new WPI_TalonSRX(pick);
-
     armEncoder.setDistancePerPulse((2.0 * Math.PI )/ 7);
     setGoal(0.5);
   }
