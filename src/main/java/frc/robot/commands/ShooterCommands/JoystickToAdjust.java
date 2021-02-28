@@ -7,25 +7,22 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class JoystickToAdjust extends CommandBase{
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     Shooter shooter;
-    Joystick joy;
-    boolean oil2;
-    
+    int direction;
 
-    public JoystickToAdjust(Shooter john){
+    public JoystickToAdjust(Shooter john, int direction){
         this.shooter = john;
-        oil2 = false;
+        this.direction = direction;
         addRequirements(shooter);   
     }
 
     @Override
     public void initialize(){     
-        oil2 = !oil2;
-
-        if (oil2 = true)
+        if (direction == 0)
             shooter.setServoSpeed(1.0);
-        if (oil2 = false)
+        if (direction == 1)
             shooter.setServoSpeed(-1.0);
     }
+
 
 
     @Override

@@ -1,23 +1,22 @@
-package frc.robot.commands.ArmCommands;
+package frc.robot.commands.MagazineCommands;
 
-
-import frc.robot.subsystems.Pickup;
+import frc.robot.subsystems.Magazine;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class JoystickToArm extends CommandBase{
+public class JoystickToMagazine extends CommandBase{
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    Pickup pickup;
+    Magazine mag;
     boolean oil;
     
 
-    public JoystickToArm(Pickup pickup){
-        this.pickup = pickup;
-        addRequirements(pickup);   
+    public JoystickToMagazine(Magazine mag){
+        this.mag = mag;
+        addRequirements(mag);   
     }
 
     @Override
     public void execute(){     
-    //unused for now lol, gotta test 
+    
     
     }
 

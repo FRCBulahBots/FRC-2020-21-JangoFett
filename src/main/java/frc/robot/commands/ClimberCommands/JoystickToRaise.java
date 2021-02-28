@@ -9,6 +9,7 @@ public class JoystickToRaise extends CommandBase{
     Climb climb;
     int direction;
 
+
     public JoystickToRaise(Climb climber, int direction){
         this.climb = climber;
         this.direction = direction;
@@ -16,17 +17,18 @@ public class JoystickToRaise extends CommandBase{
     }
 
     @Override
-    public void initialize(){     
+    public void execute() {
         if (direction == 0)
-            climb.setPoleSpeed(-1.0);
+            climb.setPoleSpeed(0.10f);
         if (direction == 1)
-            climb.setPoleSpeed(1.0);
+            climb.setPoleSpeed(-0.10f);
     }
 
     @Override
-    public void end(boolean interrupted){
-        climb.setPoleSpeed(0);
+    public void end(boolean interruption){
+        climb.setPoleSpeed(0.0);
     }
+
 
     @Override
     public boolean isFinished(){

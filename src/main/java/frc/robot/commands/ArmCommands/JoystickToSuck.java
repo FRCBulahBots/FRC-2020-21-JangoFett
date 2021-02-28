@@ -18,23 +18,15 @@ public class JoystickToSuck extends CommandBase{
     }
 
     @Override
-    public void initialize(){
+    public void execute(){
         if (direction == 0)
-            pickup.setSuckSpeed(-0.10);
+            pickup.setSuckSpeed(0.10f);
         if (direction == 1)
-            pickup.setSuckSpeed(0.10);
-    } 
-
-    @Override
-    public void end(boolean interuption){
-        pickup.setSuckSpeed(0.0);
+            pickup.setSuckSpeed(-0.10f);
     }
 
     @Override
     public boolean isFinished(){
         return true;
     }
-
-    
-
 }

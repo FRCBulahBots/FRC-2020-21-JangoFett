@@ -6,25 +6,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class JoystickToPull extends CommandBase{
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     Climb climb;
-    int direction;
-    boolean extendus;
 
-    public JoystickToPull(Climb climber, int direction){
+
+    public JoystickToPull(Climb climber){
         this.climb = climber;
-        this.direction = direction;
-        extendus = false;
         addRequirements(climb);   
         
     }
 
     @Override
     public void initialize(){    
-        extendus = !extendus;
-        
-        if (extendus = true)
-            climb.setWinchSpeed(-1.0);
-        if (extendus = false)
-            climb.setWinchSpeed(1.0);
+        climb.setWinchSpeed(1.0);
+            if (climb.winchmotor1.getMotorOutputVoltage() >= 13f){
+                climb.setWinchSpeed(0);
+            }
     }
 
     @Override

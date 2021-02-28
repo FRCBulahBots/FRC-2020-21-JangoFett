@@ -8,15 +8,26 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.simulation.JoystickSim;
+import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Pickup;
+import frc.robot.subsystems.Shooter;
 import frc.robot.commands.ArmCommands.JoystickToSuck;
 import frc.robot.commands.ClimberCommands.JoystickToPull;
 import frc.robot.commands.ClimberCommands.JoystickToRaise;
+import frc.robot.commands.ShooterCommands.JoystickToAdjust;
+import frc.robot.commands.ShooterCommands.JoystickToShoot;
+import frc.robot.commands.AutonCommand;
 import frc.robot.commands.ArmCommands.JoystickToArm;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
 
 
@@ -27,6 +38,8 @@ public class RobotContainer {
   private final Drivetrain drive = new Drivetrain(Constants.leftMasterChief, Constants.leftFollower, Constants.rightMasterChief, Constants.rightFollower);
   private final Pickup picker = new Pickup(Constants.armMover, Constants.pickupDeviceID, Constants.armA, Constants.armB);
   private final Climb climber = new Climb(Constants.poleMotor, Constants.climbmotor1);
+  private final Shooter shoot = new Shooter(Constants.shooterDeviceID, Constants.bigBoysPort);
+  
 
 
   public RobotContainer() {
@@ -34,35 +47,43 @@ public class RobotContainer {
     configureButtonBindings();  
       
     //simple lambda expression to make robot drive using left and right joystick.
-    drive.setDefaultCommand(new RunCommand(() -> drive.arcadeDrive(-joystick.getRawAxis(1), joystick.getRawAxis(4)), drive));
+    drive.setDefaultCommand(new RunCommand(() -> drive.arcadeDrive(0.7 * joystick.getRawAxis(1), -0.7 * joystick.getRawAxis(4)), drive));
+    //another lambda expression to allow for dual-trigger shooter, 
+    shoot.setDefaultCommand(new RunCommand(() -> shoot.setShootSpeed(joystick.getRawAxis(5), joystick.getRawAxis(6)), shoot));
+  
+  
   }
 
 
   private void configureButtonBindings() {
 
+
     //toggles arms from upright to pickup position.
     new JoystickButton(joystick, 7)
-      .whenPressed(new JoystickToArm(picker));
-
+      .whenPressed(() -> {picker.setGoal(0.8); picker.enable();}, picker);
     //pulls/pushes ball into magazine or out of arm, WHEN HELD.
     new JoystickButton(joystick, 0)
       .whenHeld(new JoystickToSuck(picker, 0));
     new JoystickButton(joystick, 1)
       .whenHeld(new JoystickToSuck(picker, 1));
 
-
-    new JoystickButton(joystick, 2)
-      .whenPressed(new JoystickToRaise(climber, 0));
+    //controls the servos of the shooter by using the Up and Down D-Pad.
+    new POVButton(joystick, 0)
+      .whenPressed(new JoystickToAdjust(shoot, 0));
+    new POVButton(joystick, 180)
+      .whenPressed(new JoystickToAdjust(shoot, 1));
+      
+    
       
          
   
     
   }
 
-   /*
+  
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    AutonCommand auto = new AutonCommand(drive);
+    return auto;
   }
-  */
+  
 }

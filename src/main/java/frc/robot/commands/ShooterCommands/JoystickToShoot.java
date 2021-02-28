@@ -1,40 +1,28 @@
 package frc.robot.commands.ShooterCommands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 
 public class JoystickToShoot extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     public Shooter shoot;
-    public Joystick joy;
-    public int direction;
+    private double leftBumper;
+    private double rightBumper;
 
-    public JoystickToShoot(Shooter shoot, int direction) {
+
+    public JoystickToShoot(Shooter shoot, double leftBumper, double rightBumper) {
         this.shoot = shoot;
-        this.direction = direction;
-
+        this.leftBumper = leftBumper;
+        this.rightBumper = rightBumper;
         addRequirements(shoot);   
     }
 
     @Override
-    public void initialize(){
-        if (direction == 0)
-            shoot.setShootSpeed(-0.10);
-        if (direction == 1)
-            shoot.setShootSpeed(0.10);
+    public void execute(){
+        shoot.setShootSpeed(leftBumper, rightBumper);
     } 
-
-    @Override
-    public void end(boolean interuption){
-        shoot.setShootSpeed(0.0);
-    }
-
-    @Override
-    public boolean isFinished(){
-        return true;
-    }
-
-    
 
 }
