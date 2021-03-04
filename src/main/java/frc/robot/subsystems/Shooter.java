@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class Shooter extends PIDSubsystem {
   // One Neo Motor (controlled by the CanSparkMax) and a pair of Servos
@@ -19,15 +21,15 @@ public class Shooter extends PIDSubsystem {
   private SimpleMotorFeedforward motorFeedforward;
 
   public Shooter(int shooterDeviceID, int bigBoysPort) {
-    super(new PIDController(0.02, 0, 0));
+    super(new PIDController(0.0004, 0, 0));
     shoot = new CANSparkMax(shooterDeviceID, MotorType.kBrushless);
     bigBoys = new Servo(bigBoysPort);
-    motorFeedforward = new SimpleMotorFeedforward(0.1, 0.1);
+    //motorFeedforward = new SimpleMotorFeedforward(0.1, 0.1);
+    setSetpoint(-1000);
 
-    // setting servos limits; not too far and too in.
-    bigBoys.setBounds(1.1, 1.5, 1.5, 1.5, 1.7);
+        // setting servos limits; not too far and too in.
+        bigBoys.setBounds(1.1, 1.5, 1.5, 1.5, 1.7);
     
-    setSetpoint(1500);
   }
 
   public void setServoSpeed(double servoSpeedToSet) {
@@ -35,13 +37,13 @@ public class Shooter extends PIDSubsystem {
   }
 
   public void setShootSpeed(double speed){
-    shoot.set((speed));
+    shoot.set(speed);
   }
 
   @Override
   protected void useOutput(double output, double setpoint) {
-    System.out.println("getting here");
-    shoot.set(output + 0.2);
+    SmartDashboard.putNumber("ShooterEncoderVal", shoot.getEncoder().getVelocity());
+    shoot.set(output);
   }
 
   @Override

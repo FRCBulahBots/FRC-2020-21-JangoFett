@@ -48,10 +48,12 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double forward, double turn){
     drive.arcadeDrive(forward, turn);
 
+   // SmartDashboard.putNumber("Enc", leftFollower.getSelectedSensorPosition());
+
     //Gyro Stuff, temporary.
-    SmartDashboard.putBoolean("IMU_Connected", gyro.isConnected());
-    SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
-    SmartDashboard.putNumber("IMU_IsRotating", gyro.getRate());
+   // SmartDashboard.putBoolean("IMU_Connected", gyro.isConnected());
+   // SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
+   // SmartDashboard.putNumber("IMU_IsRotating", gyro.getRate());
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");

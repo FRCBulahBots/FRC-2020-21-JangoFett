@@ -29,8 +29,8 @@ public final class Constants {
     public static int rightFollower = 3;
     public static int armMover = 4;
     public static int beltMotor = 5;
-    public static int shooterDeviceID = 8;
     public static int pickupDeviceID = 7;
+    public static int shooterDeviceID = 8;
     public static int climbmotor1 = 9;
     public static int climbmotor2 = 10;
 
