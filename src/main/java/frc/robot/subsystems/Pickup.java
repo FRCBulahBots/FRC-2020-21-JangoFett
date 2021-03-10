@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.State;
@@ -53,10 +54,14 @@ public class Pickup extends ProfiledPIDSubsystem{
 
   @Override
   protected void useOutput(double output, State setpoint) {
-    double feedforward = armFeedForward.calculate(setpoint.position, setpoint.velocity);
-    armMotor.setVoltage(output + feedforward);
+   armMotor.set(output);
   }
   
+  public void setArmSpeed(double speed){
+    SmartDashboard.putNumber("Enc", this.armMotor.getSelectedSensorPosition());
+    armMotor.set(speed);
+  }
+
   public void setSuckSpeed(double speed) {
     suckMotor.set(speed);
   }

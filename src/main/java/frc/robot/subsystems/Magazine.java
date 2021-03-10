@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
@@ -12,16 +14,20 @@ import frc.robot.Constants;
 
 
 public class Magazine extends ProfiledPIDSubsystem {
-    private TalonSRX johnson;
+    private VictorSPX johnson;
     private SimpleMotorFeedforward magMotorFeedforward;
 
-    public Magazine(int beltID, int mag1, int mag2){
+    public Magazine(int beltID){
         super(new ProfiledPIDController(0.02, 0, 0, new TrapezoidProfile.Constraints(Constants.kMaxVelocityRadPerSecond, Constants.kMaxAccelerationRadPerSecSquared), 0));
-        johnson = new TalonSRX(beltID);
-        johnson.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+        johnson = new VictorSPX(beltID);
+        //johnson.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
     
         //rockbottom.setDistancePerPulse( (2 * Math.PI) / 7);
         setGoal(Math.PI);
+    }
+
+    public void magSpeed(double input){
+        johnson.set(ControlMode.PercentOutput, input);
     }
 
     @Override

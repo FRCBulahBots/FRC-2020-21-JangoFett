@@ -48,7 +48,7 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double forward, double turn){
     drive.arcadeDrive(forward, turn);
 
-   // SmartDashboard.putNumber("Enc", leftFollower.getSelectedSensorPosition());
+
 
     //Gyro Stuff, temporary.
    // SmartDashboard.putBoolean("IMU_Connected", gyro.isConnected());

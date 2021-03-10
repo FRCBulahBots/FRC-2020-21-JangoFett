@@ -7,8 +7,11 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.simulation.JoystickSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -41,7 +44,7 @@ public class RobotContainer {
   private final Pickup picker = new Pickup(Constants.armMover, Constants.pickupDeviceID, Constants.armA, Constants.armB);
   private final Climb climber = new Climb(Constants.poleMotor, Constants.climbmotor1);
   private final Shooter shoot = new Shooter(Constants.shooterDeviceID, Constants.bigBoysPort);
-  
+  private final Magazine magazine = new Magazine(Constants.beltMotor);
 
 
   public RobotContainer() {
@@ -51,8 +54,9 @@ public class RobotContainer {
     //simple lambda expression to make robot drive using left and right joystick.
     drive.setDefaultCommand(new RunCommand(() -> drive.arcadeDrive(0.7 * joystick.getRawAxis(1), -0.7 * joystick.getRawAxis(4)), drive));
     //another lambda expression to allow for dual-trigger shooter, 
-    //shoot.setDefaultCommand(new RunCommand(() -> shoot.setShootSpeed(joystick.getRawAxis(3)), shoot));
-  
+    shoot.setDefaultCommand(new RunCommand(() -> new JoystickToShoot(shoot, joystick.getRawAxis(2), joystick.getRawAxis(3)), shoot));
+    
+    
   
   }
 
@@ -69,26 +73,30 @@ public class RobotContainer {
     new JoystickButton(joystick, 2)
       .whenHeld(new JoystickToSuck(picker, 1));
 
-      
-      new JoystickButton(joystick, 8)
+    new JoystickButton(joystick, 4)
       .whenPressed(shoot::enable, shoot);
-      new JoystickButton(joystick, 7)
+    new JoystickButton(joystick, 3)
       .whenPressed(shoot::disable, shoot);
-      
+
+    new JoystickButton(joystick, 8)
+      .whenPressed(() -> magazine.magSpeed(0.4));
+
+    new JoystickButton(joystick, 7)
+      .whenPressed(() -> picker.setArmSpeed(0.6));   
+
     //controls the servos of the shooter by using the Up and Down D-Pad.
     new POVButton(joystick, 0)
       .whenPressed(new JoystickToAdjust(shoot, 0));
     new POVButton(joystick, 180)
       .whenPressed(new JoystickToAdjust(shoot, 1));
-      
-    
-      
-         
   
-    
   }
 
-  
+  public void disablePIDSubsystems(){
+    this.shoot.disable();
+  }
+
+
   public Command getAutonomousCommand() {
     AutonCommand auto = new AutonCommand(drive);
     return auto;

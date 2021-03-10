@@ -19,14 +19,13 @@ public class Shooter extends PIDSubsystem {
   private CANSparkMax shoot;
   private Servo bigBoys;
   private SimpleMotorFeedforward motorFeedforward;
-
+  
   public Shooter(int shooterDeviceID, int bigBoysPort) {
-    super(new PIDController(0.0004, 0, 0));
+    super(new PIDController(0.0001, 0, 0));
     shoot = new CANSparkMax(shooterDeviceID, MotorType.kBrushless);
     bigBoys = new Servo(bigBoysPort);
-    //motorFeedforward = new SimpleMotorFeedforward(0.1, 0.1);
-    setSetpoint(-1000);
-
+    motorFeedforward = new SimpleMotorFeedforward(0, 0.0002);
+    setSetpoint(-4000);
         // setting servos limits; not too far and too in.
         bigBoys.setBounds(1.1, 1.5, 1.5, 1.5, 1.7);
     
@@ -36,15 +35,15 @@ public class Shooter extends PIDSubsystem {
     bigBoys.set(servoSpeedToSet);
   }
 
-  public void setShootSpeed(double speed){
-    shoot.set(speed);
-  }
 
   @Override
   protected void useOutput(double output, double setpoint) {
     SmartDashboard.putNumber("ShooterEncoderVal", shoot.getEncoder().getVelocity());
-    shoot.set(output);
-  }
+    double outputPercentage = output + motorFeedforward.calculate(setpoint);
+    SmartDashboard.putNumber("ShooterOutput", outputPercentage);
+    
+    shoot.set(output + motorFeedforward.calculate(setpoint));
+  } 
 
   @Override
   protected double getMeasurement() {

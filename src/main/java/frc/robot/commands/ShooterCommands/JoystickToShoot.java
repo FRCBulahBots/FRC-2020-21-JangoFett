@@ -22,7 +22,10 @@ public class JoystickToShoot extends CommandBase {
 
     @Override
     public void execute(){
-        //shoot.setShootSpeed(leftBumper, rightBumper);
+        if (leftBumper >= 0.1 && rightBumper == 0)
+            shoot.enable();
+        if (rightBumper >= 0.1 && leftBumper == 0)
+            shoot.disable();
     } 
 
 }
