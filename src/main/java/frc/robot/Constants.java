@@ -20,7 +20,6 @@ package frc.robot;
 public final class Constants {
     //PWM
     public static int bigBoysPort = 0;
-    public static int poleMotor = 1;
 
     //CAN
     public static int leftMasterChief = 0;
@@ -28,12 +27,12 @@ public final class Constants {
     public static int rightMasterChief = 2;
     public static int rightFollower = 3;
     public static int armMover = 4;
+    public static int climbMotor = 5;
     public static int beltMotor = 6;
     public static int pickupDeviceID = 7;
     public static int shooterDeviceID = 8;
-    public static int climbmotor1 = 9;
-    public static int climbmotor2 = 10;
-
+    public static int winchmotor1 = 9;
+    public static int winchmotor2 = 10;
     
 
     //DIO
@@ -42,19 +41,6 @@ public final class Constants {
     
     //USB
     public static int joystick = 0;
-
-    //Pickup/Magazine Constants
-    public static final double kShooterFreeRPS = 5676;
-
-    public static final double kSVolts = 0.05;
-    public static final double kVVoltSecondsPerRotation = 12.0 / kShooterFreeRPS;
-
-    public static final double kCosVolts = 1;
-    public static final double kVVoltSecondPerRad = 0.1;
-    public static final double kAVoltSecondSquaredPerRad = 0.1;
-
-    public static final double kMaxVelocityRadPerSecond = 3;
-    public static final double kMaxAccelerationRadPerSecSquared = 10;
 
 
 

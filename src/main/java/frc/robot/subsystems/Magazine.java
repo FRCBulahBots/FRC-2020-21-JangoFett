@@ -18,7 +18,7 @@ public class Magazine extends ProfiledPIDSubsystem {
     private SimpleMotorFeedforward magMotorFeedforward;
 
     public Magazine(int beltID){
-        super(new ProfiledPIDController(0.02, 0, 0, new TrapezoidProfile.Constraints(Constants.kMaxVelocityRadPerSecond, Constants.kMaxAccelerationRadPerSecSquared), 0));
+        super(new ProfiledPIDController(0.02, 0, 0, new TrapezoidProfile.Constraints(0.0004, 0.0004), 0));
         johnson = new VictorSPX(beltID);
         //johnson.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
     

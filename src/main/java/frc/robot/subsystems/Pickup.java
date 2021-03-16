@@ -19,51 +19,51 @@ import edu.wpi.first.wpilibj.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.State;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Pickup extends ProfiledPIDSubsystem{
   private CANSparkMax suckMotor;
-  public WPI_TalonSRX armMotor;
+  public TalonSRX armMotor;
   public Encoder armEncoder;
-  public double kP = 0.002f;
   public ArmFeedforward armFeedForward;
-
-  /*
-   * public enum ArmPositions { 
-   * Postions we may want to move to
-   * 
-   * FULLYRETRACTED(0), UPRIGHT(546), BALLPICKUP(1404);
-   * 
-   * private final int id; ArmPositions(int id) { this.id = id; } public int
-   * getValue() { return id; } }
-   */
+  public double startPos;
+  public double endPos;
 
   public Pickup(int pick, int suck, int armA, int armB) {
-    super(new ProfiledPIDController(0.002f, 0, 0, new TrapezoidProfile.Constraints(Constants.kMaxVelocityRadPerSecond, Constants.kMaxAccelerationRadPerSecSquared), 0));
-    armEncoder = new Encoder(armA, armB, true, Encoder.EncodingType.k4X);
+    super(new ProfiledPIDController(0.001f, 0, 0, new TrapezoidProfile.Constraints(1000, 1000), 0));
     suckMotor = new CANSparkMax(suck, MotorType.kBrushless);
-    armMotor = new WPI_TalonSRX(pick);
-    armEncoder.setDistancePerPulse((2.0 * Math.PI )/ 7);
-    setGoal(0.5);
-  }
-
-  @Override
-  protected double getMeasurement() {
-    return armEncoder.getDistance() + 0.5;
+    armMotor = new TalonSRX(pick);
+    armMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    armFeedForward = new ArmFeedforward(0.001, 0.001, 0);
+    setGoal(0);
   }
 
   @Override
   protected void useOutput(double output, State setpoint) {
-   armMotor.set(output);
+    //System.out.println(output);
+    System.out.println(armMotor.getSelectedSensorPosition());
+    armMotor.set(ControlMode.PercentOutput, output);
   }
-  
-  public void setArmSpeed(double speed){
-    SmartDashboard.putNumber("Enc", this.armMotor.getSelectedSensorPosition());
-    armMotor.set(speed);
+
+  @Override
+  protected double getMeasurement() {
+    return armMotor.getSelectedSensorPosition();
   }
+
 
   public void setSuckSpeed(double speed) {
     suckMotor.set(speed);
+  }
+
+  public void setArmSpeed(double speed){
+    armMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public double getInitPos(){
+    return armMotor.getSelectedSensorPosition();
   }
 
 }

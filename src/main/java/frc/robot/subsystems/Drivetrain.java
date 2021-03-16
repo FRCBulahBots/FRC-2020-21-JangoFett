@@ -21,7 +21,7 @@ public class Drivetrain extends SubsystemBase {
 
   private DifferentialDrive drive;
 
-  private ADXRS450_Gyro gyro;
+
 
   public Drivetrain(int leftMasterint, int leftFollowerint, int rightMasterint, int rightFollowerint) {
     leftMaster = new WPI_TalonSRX(leftMasterint);
@@ -29,7 +29,6 @@ public class Drivetrain extends SubsystemBase {
     rightMaster = new WPI_TalonSRX(rightMasterint);
     rightFollower = new WPI_TalonSRX(rightFollowerint);
   
-    gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
 
     //make our differential only control our masters, but...
     drive = new DifferentialDrive(leftMaster, rightMaster);
@@ -71,9 +70,9 @@ public class Drivetrain extends SubsystemBase {
   }
 
   
-  public double returnGyroAngle(){
-    return gyro.getAngle();
-  }
+  //public double returnGyroAngle(){
+  //return gyro.getAngle();
+  //}
 
 
 }
