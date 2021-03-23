@@ -42,70 +42,64 @@ public class RobotContainer {
   private final Joystick joystick = new Joystick (Constants.joystick);
 
   private final Drivetrain drive = new Drivetrain(Constants.leftMasterChief, Constants.leftFollower, Constants.rightMasterChief, Constants.rightFollower);
-  private final Pickup picker = new Pickup(Constants.armMover, Constants.pickupDeviceID, Constants.armA, Constants.armB);
+  public final Pickup picker = new Pickup(Constants.armMover, Constants.pickupDeviceID, Constants.armA, Constants.armB);
   private final Climb climber = new Climb(Constants.climbMotor, Constants.winchmotor1, Constants.winchmotor2);
-  private final Shooter shoot = new Shooter(Constants.shooterDeviceID, Constants.bigBoysPort);
-  private final Magazine magazine = new Magazine(Constants.beltMotor);
+  public final Shooter shoot = new Shooter(Constants.shooterDeviceID, Constants.bigBoysPort);
+  private final Magazine magazine = new Magazine(Constants.beltMotor, 0 , 1);
 
 
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();  
-    picker.getInitPos();
     //simple lambda expression to make robot drive using left and right joystick.
-    drive.setDefaultCommand(new RunCommand(() -> drive.arcadeDrive(0.7 * joystick.getRawAxis(1), -0.7 * joystick.getRawAxis(4)), drive));
-    
-
+    drive.setDefaultCommand(new RunCommand(() -> drive.arcadeDrive(0.70 * joystick.getRawAxis(1), -0.9 * joystick.getRawAxis(4)), drive));
   }
 
 
   private void configureButtonBindings() {
 
 
-    //toggles arms from upright to pickup position.
-    //new JoystickButton(joystick, 6)
-    //.whenPressed(() -> {picker.setGoal(0.8); picker.enable();}, picker);
-    //pulls/pushes ball into magazine or out of arm, WHEN HELD.
-    new JoystickButton(joystick, 1)
-      .whenHeld(new JoystickToSuck(picker, 0));
-    new JoystickButton(joystick, 2)
-      .whenHeld(new JoystickToSuck(picker, 1));
-
     new trigger(joystick, 3)
       .whenActive(shoot::enable, shoot);
     new trigger(joystick, 2)
       .whenActive(shoot::disable, shoot);
 
-    new JoystickButton(joystick, 6)
-      .whenPressed(() -> {picker.setGoal(-450); picker.enable();}, picker);
+    
+
+    //double offset = 0;
+    new JoystickButton(joystick, 6) 
+      .whenPressed(() -> {picker.setSetpoint(-550); picker.enable();}, picker);
     new JoystickButton(joystick, 5)
-      .whenPressed(() -> {picker.setGoal(0); picker.enable();}, picker);
-
-
-    // new JoystickButton(joystick, 8)
-    // .whenPressed(() -> magazine.magSpeed(0.4));
+      .whenPressed(() -> {picker.setSetpoint(0); picker.enable();}, picker);
 
     new JoystickButton(joystick, 8)
-      .whenHeld(new StartEndCommand(()-> picker.setArmSpeed(0.6), () -> picker.setArmSpeed(0) , picker));
-    new JoystickButton(joystick, 7)
-      .whenHeld(new StartEndCommand(()-> picker.setArmSpeed(-0.2), () -> picker.setArmSpeed(0) , picker));
+      .whileHeld(new StartEndCommand(() -> magazine.magSpeed(0.5), () -> magazine.magSpeed(0), magazine));
 
     //controls the servos of the shooter by using the Up and Down D-Pad.
     new POVButton(joystick, 0)
-      .whileHeld(new StartEndCommand(() -> climber.setPoleSpeed(1), () -> climber.setPoleSpeed(0), climber));
+      .whileHeld(new StartEndCommand(() -> climber.setPoleSpeed(0.5), () -> climber.setPoleSpeed(0), climber));
     new POVButton(joystick, 180)
-      .whileHeld(new StartEndCommand(() -> climber.setPoleSpeed(-1), () -> climber.setPoleSpeed(0), climber));
+      .whileHeld(new StartEndCommand(() -> climber.setPoleSpeed(-0.5), () -> climber.setPoleSpeed(0), climber));
 
-    new JoystickButton(joystick, 7)
-      .whenHeld(new RunCommand(() -> climber.setWinchSpeed(0.6), climber));
+      //new JoystickButton(joystick, 7)
+      //.whenHeld(new RunCommand(() -> climber.setWinchSpeed(0.6), climber));
 
+      //new JoystickButton(joystick, 3)
+      //.whenHeld(new StartEndCommand (() -> climber.setWinchSpeed(0.4), () -> climber.setWinchSpeed(0), climber));
+
+
+    //new JoystickButton(joystick, 7)
+      //.whenHeld(new StartEndCommand(() -> shoot.setServoSpeed(1), () -> shoot.setServoSpeed(0), shoot));
+    //new JoystickButton(joystick, 8)
+      //.whenHeld(new StartEndCommand(() -> shoot.setServoSpeed(-1), () -> shoot.setServoSpeed(0), shoot));
 
   }
   
 
   public void disablePIDSubsystems(){
     this.shoot.disable();
-    this.picker.disable();
+    picker.setSetpoint(0);
+    this.picker.enable();
   }
 
 

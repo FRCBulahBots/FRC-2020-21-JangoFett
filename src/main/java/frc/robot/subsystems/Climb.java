@@ -20,8 +20,8 @@ public class Climb extends SubsystemBase {
 
         polemotor.setNeutralMode(NeutralMode.Coast);
     
-        winchmotor2.setInverted(InvertType.FollowMaster);
         winchmotor2.follow(winchmotor1);
+        winchmotor2.setInverted(InvertType.FollowMaster);
     }
 
     public void setPoleSpeed(double dawg){

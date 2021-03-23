@@ -29,8 +29,8 @@ public final class Constants {
     public static int armMover = 4;
     public static int climbMotor = 5;
     public static int beltMotor = 6;
-    public static int pickupDeviceID = 7;
-    public static int shooterDeviceID = 8;
+    public static int shooterDeviceID = 7;
+    public static int pickupDeviceID = 8;
     public static int winchmotor1 = 9;
     public static int winchmotor2 = 10;
     
