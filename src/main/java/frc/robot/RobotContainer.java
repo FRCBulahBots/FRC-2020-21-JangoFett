@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.simulation.JoystickSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,6 +26,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Pickup;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Vision;
 import frc.robot.commands.ArmCommands.JoystickToSuck;
 import frc.robot.commands.ClimberCommands.JoystickToPull;
 import frc.robot.commands.ClimberCommands.JoystickToRaise;
@@ -46,6 +48,7 @@ public class RobotContainer {
   private final Climb climber = new Climb(Constants.climbMotor, Constants.winchmotor1, Constants.winchmotor2);
   public final Shooter shoot = new Shooter(Constants.shooterDeviceID, Constants.bigBoysPort);
   private final Magazine magazine = new Magazine(Constants.beltMotor, 0 , 1);
+  private final Vision vision = new Vision();
 
 
   public RobotContainer() {
@@ -53,6 +56,7 @@ public class RobotContainer {
     configureButtonBindings();  
     //simple lambda expression to make robot drive using left and right joystick.
     drive.setDefaultCommand(new RunCommand(() -> drive.arcadeDrive(0.70 * joystick.getRawAxis(1), -0.9 * joystick.getRawAxis(4)), drive));
+
   }
 
 
