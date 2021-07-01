@@ -42,7 +42,6 @@ public class Pickup extends PIDSubsystem{
   @Override
   protected void useOutput(double output, double setpoint) {
     armMotor.set(ControlMode.PercentOutput, output);
-    suckMotor.set((setpoint / 550) * 0.3);
   }
 
   

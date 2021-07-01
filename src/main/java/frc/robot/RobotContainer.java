@@ -41,7 +41,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();  
 
-    //simple lambda expression to make robot drive using left and right joystick.
+    //Drive Default Control
     drive.setDefaultCommand(new RunCommand(() -> drive.arcadeDrive(0.70 * joystick.getRawAxis(1), -0.9 * joystick.getRawAxis(4)), drive));
     //drive.setDefaultCommand(new JoystickToDrive(drive, 1, 4));
   }
@@ -49,6 +49,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
 
+    //Shooter Toggle
     new ShooterTrigger(joystick, 3)
       .whenActive(shoot::enable, shoot);
     new ShooterTrigger(joystick, 2)
@@ -58,30 +59,30 @@ public class RobotContainer {
     new ShooterTrigger(joystick, 3)
       .whenActive(new JoystickToShoot(shoot, 0, 4500));
     new ShooterTrigger(joystick, 2)
-    .whenActive(new JoystickToShoot(shoot, 1, 0));
+      .whenActive(new JoystickToShoot(shoot, 1, 0));
 */
 
+    //PID Control of the Arm
     new JoystickButton(joystick, 6) 
-      .whenPressed(() -> {picker.setSetpoint(-550); picker.enable();}, picker);
+      .whenPressed(() -> {picker.setSetpoint(-550); picker.enable(); picker.setSuckSpeed(0.3);}, picker);
     new JoystickButton(joystick, 5)
-      .whenPressed(() -> {picker.setSetpoint(0); picker.enable();}, picker);
+      .whenPressed(() -> {picker.setSetpoint(0); picker.enable(); picker.setSuckSpeed(0.0);}, picker);
 
-  
-    
+    //Magazine Pushforward
     new JoystickButton(joystick, 8)
       .whileHeld(new StartEndCommand(() -> magazine.magSpeed(0.5), () -> magazine.magSpeed(0), magazine));
 
-    //controls the servos of the shooter by using the Up and Down D-Pad.
+    //Hook controls
     new POVButton(joystick, 0)
       .whileHeld(new StartEndCommand(() -> climber.setPoleSpeed(0.5), () -> climber.setPoleSpeed(0), climber));
     new POVButton(joystick, 180)
       .whileHeld(new StartEndCommand(() -> climber.setPoleSpeed(-0.5), () -> climber.setPoleSpeed(0), climber));
 
-
+    //Winch Controls
     new JoystickButton(joystick, 3)
       .whenHeld(new StartEndCommand (() -> climber.setWinchSpeed(0.4), () -> climber.setWinchSpeed(0), climber));
 
-
+    //
     //new JoystickButton(joystick, 7)
       //.whenHeld(new StartEndCommand(() -> shoot.setServoSpeed(1), () -> shoot.setServoSpeed(0), shoot));
     //new JoystickButton(joystick, 8)
