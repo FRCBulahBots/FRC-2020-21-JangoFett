@@ -6,9 +6,7 @@ import frc.robot.subsystems.Magazine;
 public class JoystickToMagazine extends CommandBase{
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     Magazine mag;
-  
     int dir;
-    
 
     public JoystickToMagazine(Magazine mag, int dir){
         this.mag = mag;

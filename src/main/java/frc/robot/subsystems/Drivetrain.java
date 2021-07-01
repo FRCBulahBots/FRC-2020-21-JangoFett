@@ -15,7 +15,7 @@ public class Drivetrain extends SubsystemBase {
 
   private DifferentialDrive drive;
 
-
+  //to-do, figure out why it's "acting like a truck"
 
   public Drivetrain(int leftMasterint, int leftFollowerint, int rightMasterint, int rightFollowerint) {
     leftMaster = new WPI_TalonSRX(leftMasterint);

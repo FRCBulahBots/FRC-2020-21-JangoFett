@@ -30,7 +30,7 @@ public class Pickup extends PIDSubsystem{
     armMotor = new TalonSRX(pick);
     armMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     controller.setTolerance(20);
-    
+  
   }
 
   @Override

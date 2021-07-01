@@ -68,15 +68,36 @@ public class RobotContainer {
     new JoystickButton(joystick, 5)
       .whenPressed(() -> {picker.setSetpoint(0); picker.enable(); picker.setSuckSpeed(0.0);}, picker);
 
+/*
+    new JoystickButton(joystick, 6)
+      .whenPressed(new JoystickToArm(picker, 0, -550)); 
+    new JoystickButton(joystick, 5)
+      .whenPressed(new JoystickToArm(picker, 1, 0));
+
+*/
+
     //Magazine Pushforward
     new JoystickButton(joystick, 8)
       .whileHeld(new StartEndCommand(() -> magazine.magSpeed(0.5), () -> magazine.magSpeed(0), magazine));
 
+/*
+    new JoystickButton(joystick, 8)
+      .whileHeld(new JoystickToMagazine(magazine, 0))
+    new JoystickButton(joystick, 9)
+      .whileHeld(new JoystickToMagazine(magazine, 1))
+*/
     //Hook controls
     new POVButton(joystick, 0)
       .whileHeld(new StartEndCommand(() -> climber.setPoleSpeed(0.5), () -> climber.setPoleSpeed(0), climber));
     new POVButton(joystick, 180)
       .whileHeld(new StartEndCommand(() -> climber.setPoleSpeed(-0.5), () -> climber.setPoleSpeed(0), climber));
+
+/*
+    new POVButton(joystick, 0)
+      .whileHeld(new JoystickToRaise(climber, 0))
+    new POVButton(joystick, 180)
+      .whileHeld(new JoystickToRaise(climber, 1))
+*/
 
     //Winch Controls
     new JoystickButton(joystick, 3)

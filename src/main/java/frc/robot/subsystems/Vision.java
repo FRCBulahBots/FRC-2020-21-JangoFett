@@ -14,6 +14,7 @@ public class Vision extends SubsystemBase{
     NetworkTableEntry tx, ty, tv, ta;
 
     public Vision(){
+        //to do, confirm which Camera is which.
         table = NetworkTableInstance.getDefault().getTable("limelight");
         tx = table.getEntry("tx");
         ty = table.getEntry("ty");
@@ -23,6 +24,7 @@ public class Vision extends SubsystemBase{
         drivercamera.startAutomaticCapture();
     }
 
+        
     @Override
     public void periodic() {
         
