@@ -1,31 +1,44 @@
 package frc.robot.commands.ShooterCommands;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.subsystems.Shooter;
 
 public class JoystickToShoot extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     public Shooter shoot;
-    private double leftBumper;
-    private double rightBumper;
+    private int dir;
+    private int goal;
 
-
-    public JoystickToShoot(Shooter shoot, double leftBumper, double rightBumper) {
+    public JoystickToShoot(Shooter shoot, int dir, int goal) {
         this.shoot = shoot;
-        this.leftBumper = leftBumper;
-        this.rightBumper = rightBumper;
-        addRequirements(shoot);   
+        this.dir = dir;
+        addRequirements(shoot);  
+        this.goal = goal; 
+    }
+
+    @Override
+    public void initialize() {
+        if (dir == 0) shoot.enable();
+        if (dir == 1) shoot.disable();
+        shoot.setSetpoint(goal);
     }
 
     @Override
     public void execute(){
-        if (leftBumper >= 0.1 && rightBumper == 0)
-            shoot.enable();
-        if (rightBumper >= 0.1 && leftBumper == 0)
-            shoot.disable();
+        if (dir == 0) shoot.enable();
+        if (dir == 1) shoot.disable();
+        shoot.setSetpoint(goal);
     } 
+
+    @Override
+    public boolean isFinished(){
+        return true;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        shoot.disable();
+        shoot.setSetpoint(0);
+    }
 
 }

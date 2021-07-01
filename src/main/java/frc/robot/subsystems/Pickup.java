@@ -7,36 +7,30 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
-import frc.robot.Constants;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.controller.ArmFeedforward;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.State;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.controller.ArmFeedforward;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
 public class Pickup extends PIDSubsystem{
   public CANSparkMax suckMotor;
   public TalonSRX armMotor;
   public Encoder armEncoder;
   public ArmFeedforward armFeedForward;
+  public static PIDController controller = new PIDController(0.003, 0, 0);
 
   public Pickup(int pick, int suck, int armA, int armB) {
-    super(new PIDController(0.003, 0, 0));
+    super(controller);
     suckMotor = new CANSparkMax(suck, MotorType.kBrushless);
     armMotor = new TalonSRX(pick);
     armMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    controller.setTolerance(20);
+    
   }
 
   @Override

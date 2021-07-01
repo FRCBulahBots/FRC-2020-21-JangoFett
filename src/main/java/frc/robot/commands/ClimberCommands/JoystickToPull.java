@@ -15,11 +15,12 @@ public class JoystickToPull extends CommandBase{
     }
 
     @Override
-    public void initialize(){    
+    public void execute(){  
         climb.setWinchSpeed(1.0);
-            if (climb.winchmotor1.getMotorOutputVoltage() >= 13f){
-                climb.setWinchSpeed(0);
-            }
+        if (climb.winchmotor1.getMotorOutputVoltage() >= 13f){
+            climb.setWinchSpeed(0);
+        }  
+
     }
 
     @Override

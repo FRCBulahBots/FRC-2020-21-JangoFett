@@ -28,8 +28,7 @@ public class JoystickToRaise extends CommandBase{
     public void end(boolean interruption){
         climb.setPoleSpeed(0.0);
     }
-
-
+    
     @Override
     public boolean isFinished(){
         return true;

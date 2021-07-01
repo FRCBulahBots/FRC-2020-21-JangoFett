@@ -1,8 +1,7 @@
 package frc.robot.commands.ShooterCommands;
 
-import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Shooter;
 
 public class JoystickToAdjust extends CommandBase{
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -22,6 +21,8 @@ public class JoystickToAdjust extends CommandBase{
         if (direction == 1)
             shooter.setServoSpeed(-1.0);
     }
+
+    
 
 
 
