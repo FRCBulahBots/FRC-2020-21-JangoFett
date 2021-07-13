@@ -18,17 +18,9 @@ public class JoystickToShoot extends CommandBase {
 
     @Override
     public void initialize() {
-        if (dir == 0) shoot.enable();
-        if (dir == 1) shoot.disable();
+        shoot.enable();
         shoot.setSetpoint(goal);
     }
-
-    @Override
-    public void execute(){
-        if (dir == 0) shoot.enable();
-        if (dir == 1) shoot.disable();
-        shoot.setSetpoint(goal);
-    } 
 
     @Override
     public boolean isFinished(){

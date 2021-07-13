@@ -9,11 +9,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.AutonCommand;
+import frc.robot.commands.DriveCommands.JoystickToDrive;
+import frc.robot.commands.MagazineCommands.JoystickToMagazine;
 import frc.robot.commands.ShooterCommands.JoystickToShoot;
 import frc.robot.commands.ShooterCommands.ShooterTrigger;
 import frc.robot.subsystems.Climb;
@@ -33,8 +36,8 @@ public class RobotContainer {
   public final Pickup picker = new Pickup(Constants.armMover, Constants.pickupDeviceID, Constants.armA, Constants.armB);
   private final Climb climber = new Climb(Constants.climbMotor, Constants.winchmotor1, Constants.winchmotor2);
   public final Shooter shoot = new Shooter(Constants.shooterDeviceID, Constants.bigBoysPort);
-  private final Magazine magazine = new Magazine(Constants.beltMotor, 0 , 1);
-  private final Vision vision = new Vision();
+  private final Magazine magazine = new Magazine(Constants.beltMotor);
+  //private final Vision vision = new Vision();
 
 
   public RobotContainer() {
@@ -43,30 +46,30 @@ public class RobotContainer {
 
     //Drive Default Control
     drive.setDefaultCommand(new RunCommand(() -> drive.arcadeDrive(0.70 * joystick.getRawAxis(1), -0.9 * joystick.getRawAxis(4)), drive));
-    //drive.setDefaultCommand(new JoystickToDrive(drive, 1, 4));
+    
   }
 
 
   private void configureButtonBindings() {
 
+    //drive.setDefaultCommand(new JoystickToDrive(drive, 1, 4));
+    
     //Shooter Toggle
     new ShooterTrigger(joystick, 3)
       .whenActive(shoot::enable, shoot);
     new ShooterTrigger(joystick, 2)
       .whenActive(shoot::disable, shoot);
 
-/*    
-    new ShooterTrigger(joystick, 3)
-      .whenActive(new JoystickToShoot(shoot, 0, 4500));
-    new ShooterTrigger(joystick, 2)
-      .whenActive(new JoystickToShoot(shoot, 1, 0));
-*/
+    //new ShooterTrigger(joystick, 3)
+      //.whenActive(new JoystickToShoot(shoot, 0, 4500));
+    //new ShooterTrigger(joystick, 2)
+      //.whenActive(new JoystickToShoot(shoot, 1, 0));
 
     //PID Control of the Arm
     new JoystickButton(joystick, 6) 
-      .whenPressed(() -> {picker.setSetpoint(-550); picker.enable(); picker.setSuckSpeed(0.3);}, picker);
+      .whenPressed(() -> {picker.enable(); picker.setSetpoint(-550); picker.setSuckSpeed(0.3);}, picker);
     new JoystickButton(joystick, 5)
-      .whenPressed(() -> {picker.setSetpoint(0); picker.enable(); picker.setSuckSpeed(0.0);}, picker);
+      .whenPressed(() -> {picker.enable(); picker.setSetpoint(550); picker.setSuckSpeed(0.0);}, picker);
 
 /*
     new JoystickButton(joystick, 6)
@@ -75,17 +78,15 @@ public class RobotContainer {
       .whenPressed(new JoystickToArm(picker, 1, 0));
 
 */
-
     //Magazine Pushforward
-    new JoystickButton(joystick, 8)
+    new JoystickButton(joystick, 1)
       .whileHeld(new StartEndCommand(() -> magazine.magSpeed(0.5), () -> magazine.magSpeed(0), magazine));
 
-/*
-    new JoystickButton(joystick, 8)
-      .whileHeld(new JoystickToMagazine(magazine, 0))
-    new JoystickButton(joystick, 9)
-      .whileHeld(new JoystickToMagazine(magazine, 1))
-*/
+    //new JoystickButton(joystick, 1)
+      //.whenHeld(new JoystickToMagazine(magazine, 0));
+    //new JoystickButton(joystick, 9)
+      //.whileHeld(new JoystickToMagazine(magazine, 1));
+
     //Hook controls
     new POVButton(joystick, 0)
       .whileHeld(new StartEndCommand(() -> climber.setPoleSpeed(0.5), () -> climber.setPoleSpeed(0), climber));
@@ -103,7 +104,9 @@ public class RobotContainer {
     new JoystickButton(joystick, 3)
       .whenHeld(new StartEndCommand (() -> climber.setWinchSpeed(0.4), () -> climber.setWinchSpeed(0), climber));
 
-    //
+    //Shooter Adjusting
+
+
     //new JoystickButton(joystick, 7)
       //.whenHeld(new StartEndCommand(() -> shoot.setServoSpeed(1), () -> shoot.setServoSpeed(0), shoot));
     //new JoystickButton(joystick, 8)

@@ -20,6 +20,7 @@ package frc.robot;
 public final class Constants {
     //PWM
     public static int bigBoysPort = 0;
+    public static int beltMotor = 1;
 
     //CAN
     public static int leftMasterChief = 0;
@@ -28,7 +29,6 @@ public final class Constants {
     public static int rightFollower = 3;
     public static int armMover = 4;
     public static int climbMotor = 5;
-    public static int beltMotor = 6;
     public static int shooterDeviceID = 7;
     public static int pickupDeviceID = 8;
     public static int winchmotor1 = 9;
