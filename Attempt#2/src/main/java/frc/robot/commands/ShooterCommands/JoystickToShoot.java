@@ -6,12 +6,10 @@ import frc.robot.subsystems.Shooter;
 public class JoystickToShoot extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     public Shooter shoot;
-    private int dir;
     private int goal;
-
+    
     public JoystickToShoot(Shooter shoot, int dir, int goal) {
         this.shoot = shoot;
-        this.dir = dir;
         addRequirements(shoot);  
         this.goal = goal; 
     }
@@ -20,11 +18,6 @@ public class JoystickToShoot extends CommandBase {
     public void initialize() {
         shoot.enable();
         shoot.setSetpoint(goal);
-    }
-
-    @Override
-    public boolean isFinished(){
-        return true;
     }
 
     @Override

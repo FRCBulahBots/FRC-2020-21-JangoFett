@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.VisionCommands;
 
 
 import frc.robot.subsystems.Drivetrain;
@@ -23,11 +23,5 @@ public class AutonCommand extends CommandBase{
         drive.arcadeDrive(0, 0);
     
     }
-
-    @Override
-    public boolean isFinished(){
-        return true;
-    }
-    
 
 }

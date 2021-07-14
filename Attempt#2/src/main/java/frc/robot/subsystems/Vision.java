@@ -21,7 +21,6 @@ public class Vision extends SubsystemBase{
         ta = table.getEntry("ta");
         tv = table.getEntry("tv");
 
-        drivercamera.startAutomaticCapture();
     }
 
         
@@ -39,6 +38,10 @@ public class Vision extends SubsystemBase{
         SmartDashboard.putNumber("LimelightY", y);
         SmartDashboard.putNumber("LimelightArea", area);
         SmartDashboard.putNumber("LimelightValidTarget?", validity);
+    }
+
+    public void startCameras(){
+        drivercamera.startAutomaticCapture();
     }
 
 

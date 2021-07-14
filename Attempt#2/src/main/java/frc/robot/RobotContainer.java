@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.commands.AutonCommand;
+import frc.robot.commands.VisionCommands.AutonCommand;
 import frc.robot.commands.DriveCommands.JoystickToDrive;
 import frc.robot.commands.MagazineCommands.JoystickToMagazine;
 import frc.robot.commands.ShooterCommands.JoystickToShoot;
@@ -37,7 +37,7 @@ public class RobotContainer {
   private final Climb climber = new Climb(Constants.climbMotor, Constants.winchmotor1, Constants.winchmotor2);
   public final Shooter shoot = new Shooter(Constants.shooterDeviceID, Constants.bigBoysPort);
   private final Magazine magazine = new Magazine(Constants.beltMotor);
-  //private final Vision vision = new Vision();
+  private final Vision vision = new Vision();
 
 
   public RobotContainer() {
@@ -45,8 +45,10 @@ public class RobotContainer {
     configureButtonBindings();  
 
     //Drive Default Control
-    drive.setDefaultCommand(new RunCommand(() -> drive.arcadeDrive(0.70 * joystick.getRawAxis(1), -0.9 * joystick.getRawAxis(4)), drive));
+    //drive.setDefaultCommand(new RunCommand(() -> drive.arcadeDrive(0.70 * joystick.getRawAxis(1), -0.9 * joystick.getRawAxis(4)), drive));
     
+    //drive.setDefaultCommand(new JoystickToDrive(drive, () -> (0.7 * joystick.getRawAxis(1)) ,() -> (-0.9 * joystick.getRawAxis(4)) ));   
+
   }
 
 
@@ -78,14 +80,14 @@ public class RobotContainer {
       .whenPressed(new JoystickToArm(picker, 1, 0));
 
 */
+    //new JoystickButton(joystick, 1)
+      //.whileHeld(new StartEndCommand(() -> magazine.magSpeed(0.5), () -> magazine.magSpeed(0), magazine));
+
     //Magazine Pushforward
     new JoystickButton(joystick, 1)
-      .whileHeld(new StartEndCommand(() -> magazine.magSpeed(0.5), () -> magazine.magSpeed(0), magazine));
-
-    //new JoystickButton(joystick, 1)
-      //.whenHeld(new JoystickToMagazine(magazine, 0));
-    //new JoystickButton(joystick, 9)
-      //.whileHeld(new JoystickToMagazine(magazine, 1));
+      .whenHeld(new JoystickToMagazine(magazine, true));
+    new JoystickButton(joystick, 8)
+      .whenHeld(new JoystickToMagazine(magazine, false));
 
     //Hook controls
     new POVButton(joystick, 0)
