@@ -29,10 +29,4 @@ public class JoystickToMagazine extends CommandBase{
         mag.magSpeed(0);
     }
 
-    @Override
-    public boolean isFinished(){
-        return true;
-    }
-    
-
 }
